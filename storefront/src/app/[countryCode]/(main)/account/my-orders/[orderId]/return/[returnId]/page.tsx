@@ -41,5 +41,5 @@ export default async function AccountReturnDetailsPage({
     notFound()
   }
 
-  return <ReturnDetailsTemplate returns={[returnEntity]} />
+  return <ReturnDetailsTemplate order={order} returns={[returnEntity]} />
 }

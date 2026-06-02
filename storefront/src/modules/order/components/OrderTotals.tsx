@@ -12,13 +12,16 @@ export const OrderTotals: React.FC<{
       0
     ) ?? 0
 
-  const itemDiscounted =
-    //@ts-expect-error - to be removed when fulfilled_total is added to the type
-    order.items?.reduce((sum, item) => sum + item.fulfilled_total, 0) ?? 0
-  const hasDiscount = itemDiscounted < itemSubtotal
-  const itemsDiscount = itemSubtotal - itemDiscounted
+  const itemsDiscount =
+    order.items?.reduce(
+      (sum, item) => sum + (item.discount_total ?? 0),
+      0
+    ) ?? 0
+
+  const hasDiscount = itemsDiscount > 0
+
   const itemsTotal =
-    itemDiscounted + shipping_total + tax_total - (gift_card_total ?? 0)
+    itemSubtotal - itemsDiscount + (shipping_total ?? 0) + (tax_total ?? 0) - (gift_card_total ?? 0)
 
   return (
     <div className="sm:max-w-65 w-full flex-1">
@@ -85,7 +88,7 @@ export const OrderTotals: React.FC<{
           <p>
             {convertToLocale({
               currency_code,
-              amount: itemsTotal ?? 0,
+              amount: itemsTotal,
             })}
           </p>
         </div>

@@ -7,18 +7,20 @@ import { OrderItem } from "@modules/order/components/item/OrderItem"
 import { twJoin } from "tailwind-merge"
 import { ReturnStatus } from "@modules/returns/components/ReturnStatus"
 import {
-  calcExpectedRefundAmount,
   calcReturnItemAmount,
+  OrderWithReturns,
   ReturnWithOrderItems,
 } from "@lib/util/returns"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/Tabs"
 
 type ReturnDetailsTemplateProps = {
+  order: OrderWithReturns & { cart: { id: string } }
   returns: ReturnWithOrderItems[]
   isGuest?: boolean
 }
 
 export const ReturnDetailsTemplate: React.FC<ReturnDetailsTemplateProps> = ({
+  order,
   returns,
   isGuest = false,
 }) => {
@@ -29,8 +31,6 @@ export const ReturnDetailsTemplate: React.FC<ReturnDetailsTemplateProps> = ({
 
   const returnEntity =
     returns.find((r) => r.id === selectedReturnId) || returns[0]
-
-  const expectedRefundAmount = calcExpectedRefundAmount(returnEntity)
 
   return (
     <div
@@ -109,7 +109,9 @@ export const ReturnDetailsTemplate: React.FC<ReturnDetailsTemplateProps> = ({
               <p>
                 {convertToLocale({
                   currency_code: returnEntity.currency_code,
-                  amount: expectedRefundAmount,
+                  amount:
+                    returnEntity.refund_amount ??
+                    Math.abs(order.summary.pending_difference ?? 0),
                 })}
               </p>
             </div>
