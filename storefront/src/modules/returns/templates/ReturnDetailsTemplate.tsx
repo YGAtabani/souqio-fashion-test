@@ -71,7 +71,7 @@ export const ReturnDetailsTemplate: React.FC<ReturnDetailsTemplateProps> = ({
           </div>
         </div>
         <div className="rounded-xs border border-grayscale-200 p-4">
-          <ReturnStatus returnEntity={returnEntity} />
+          <ReturnStatus returnEntity={returnEntity} paymentStatus={order.payment_status} />
         </div>
         <div className="rounded-xs border border-grayscale-200 p-4 flex flex-col gap-6">
           {returnEntity.items?.map((returnItem) => {
