@@ -78,6 +78,7 @@ export const OrderStatusTag: React.FC<{
 
   if (
     order.fulfillment_status === "shipped" ||
+    order.fulfillment_status === "partially_shipped" ||
     order.fulfillment_status === "partially_delivered"
   ) {
     return (
