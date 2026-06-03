@@ -12,7 +12,7 @@ type OrderItemProps = {
   title: string
   variant?: StoreProductVariant
   quantity: number
-  fulfilled_total: number
+  discount_total: number
   unit_price: number
   currencyCode: string
   className?: string
@@ -25,13 +25,14 @@ export const OrderItem: React.FC<OrderItemProps> = ({
   title,
   variant,
   quantity,
-  fulfilled_total,
+  discount_total,
   unit_price,
   currencyCode,
   className,
 }) => {
-  const discountedUnitPrice = quantity > 0 ? fulfilled_total / quantity : 0
-  const hasDiscount = quantity > 0 && discountedUnitPrice < unit_price
+  const discountPerUnit = quantity > 0 ? discount_total / quantity : 0
+  const discountedUnitPrice = unit_price - discountPerUnit
+  const hasDiscount = discount_total > 0
 
   return (
     <div className={className}>

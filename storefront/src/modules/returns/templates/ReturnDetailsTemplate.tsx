@@ -7,7 +7,6 @@ import { OrderItem } from "@modules/order/components/item/OrderItem"
 import { twJoin } from "tailwind-merge"
 import { ReturnStatus } from "@modules/returns/components/ReturnStatus"
 import {
-  calcReturnItemAmount,
   OrderWithReturns,
   ReturnWithOrderItems,
 } from "@lib/util/returns"
@@ -86,7 +85,7 @@ export const ReturnDetailsTemplate: React.FC<ReturnDetailsTemplateProps> = ({
                 title={item?.title || ""}
                 quantity={returnItem.quantity}
                 variant={item?.variant || undefined}
-                fulfilled_total={calcReturnItemAmount(returnItem)}
+                discount_total={item.discount_total ?? 0}
                 unit_price={item?.unit_price || 0}
                 currencyCode={returnEntity.currency_code}
                 className="flex gap-x-4 sm:gap-x-8 gap-y-6 pb-6 border-b border-grayscale-100 last:border-0 last:pb-0"

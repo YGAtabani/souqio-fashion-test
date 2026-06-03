@@ -144,8 +144,7 @@ export default async function AccountOrderPage({
               title={item.title || ""}
               quantity={item.quantity}
               variant={item.variant}
-              //@ts-expect-error - to be removed when fulfilled_total is added to the type
-              fulfilled_total={item.fulfilled_total || 0}
+              discount_total={item.discount_total ?? 0}
               unit_price={item.unit_price || 0}
               currencyCode={order.currency_code}
               className="flex gap-x-4 sm:gap-x-8 gap-y-6 pb-6 border-b border-grayscale-100 last:border-0 last:pb-0"

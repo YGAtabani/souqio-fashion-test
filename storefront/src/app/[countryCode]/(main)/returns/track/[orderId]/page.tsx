@@ -2,7 +2,7 @@ import { Metadata } from "next"
 import { notFound } from "next/navigation"
 
 import { ReturnDetailsTemplate } from "@modules/returns/templates/ReturnDetailsTemplate"
-import { getOrderReturns } from "@lib/util/returns"
+import { getOrderReturns, OrderWithReturns } from "@lib/util/returns"
 import { Layout } from "@/components/Layout"
 import { fetchAndVerifyOrder } from "@lib/data/returns"
 
@@ -27,7 +27,10 @@ export default async function ReturnDetailsPage({
     notFound()
   }
 
-  const order = await fetchAndVerifyOrder(orderId, email)
+  const order = (await fetchAndVerifyOrder(
+      orderId,
+      email
+    )) as OrderWithReturns & { cart: { id: string } }
 
   if (!order) {
     notFound()
@@ -41,7 +44,7 @@ export default async function ReturnDetailsPage({
 
   return (
     <Layout>
-      <ReturnDetailsTemplate returns={orderReturns} isGuest />
+      <ReturnDetailsTemplate order={order} returns={orderReturns} isGuest />
     </Layout>
   )
 }
