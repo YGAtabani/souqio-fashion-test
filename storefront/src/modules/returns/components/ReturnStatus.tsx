@@ -15,9 +15,7 @@ export const ReturnStatus: React.FC<ReturnStatusProps> = ({
   className,
 }) => {
   const isRefunded = paymentStatus === "refunded" || paymentStatus === "partially_refunded"
-  const refundLabel = paymentStatus === "partially_refunded" ? "Partially Refunded" : "Refunded"
   const isReceived = returnEntity.status === "received" || returnEntity.status === "partially_received"
-  const receiveLabel = returnEntity.status === "partially_received" ? "Partially Received" : "Received"
 
   return (
     <UiTagList className={className}>
@@ -26,11 +24,11 @@ export const ReturnStatus: React.FC<ReturnStatusProps> = ({
       </UiTag>
       <UiTagListDivider />
       <UiTag isActive={isReceived} iconName="package">
-        {receiveLabel}
+        Received
       </UiTag>
       <UiTagListDivider />
       <UiTag isActive={isRefunded} iconName="credit-card">
-        {refundLabel}
+        Refunded
       </UiTag>
     </UiTagList>
   )
