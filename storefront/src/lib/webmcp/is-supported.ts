@@ -1,5 +1,5 @@
 interface ModelContext {
-  registerTool?: (tool: unknown) => void
+  registerTool?: (tool: unknown) => Promise<void>
 }
 
 export const isWebMCPSupported = (): boolean => {
